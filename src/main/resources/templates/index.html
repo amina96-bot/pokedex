@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap && Jquery -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script href="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/styles.css}">
+
+    <title>Annuaire des pokémons</title>
+</head>
+
+<body>
+    <div class="container site">
+        <row><h1  class="text-logo column"><span class="glyphicon glyphicon-list"></span>       Annuaire des pokémons  </h1></row>
+        <div class="row">
+            <div class="col-sm-6">
+                <a th:href="@{/signup}" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-plus"></span> Ajouter</a>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="search" style="float: right">
+                    <form class="form-inline" method="post" action="#" th:action="@{/search}">
+                        <select  name="type" class="form-control">
+                            <option th:each="type : ${types}" th:value="${type.name()}" th:text="${type.value}"></option>
+                        </select>
+                        <button type="submit" name="save" class="btn btn-secondary"><span class="glyphicon glyphicon-search"></span></button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <br><br><br><br>
+        <div class="row">
+            <div class="thumbnail" th:if="${pokemons.size()==0}">
+                <h4 >Liste des pokémons vide</h4>
+            </div>
+            <div class="col-sm-12 col-md-4" th:each="pokemon : ${pokemons}">
+                <div class="thumbnail">
+                    <img th:src="${pokemon.urlImage}" alt="Pokemon image">
+                    <div class="numero" ><span class="glyphicon glyphicon-tag" th:text="${pokemon.numero}"></span>  </div>
+                    <div class="caption">
+                        <h4  th:text="${pokemon.nom}"></h4>
+                        <div  style="text-align: center">
+                            <a style="color: darkblue" th:href="@{/show/{id}(id=${pokemon.id})}" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <a style="color: darkgreen" th:href="@{/edit/{id}(id=${pokemon.id})}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a style="color: darkred" th:href="@{/delete/{id}(id=${pokemon.id})}" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+</body>
+
+</html>

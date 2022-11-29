@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap && Jquery -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script href="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/styles.css}">
+
+    <title>Ajouter un pokémon</title>
+</head>
+<body>
+    <div class="container admin">
+        <div class="row">
+            <h1><strong>Ajouter pokémon</strong></h1>
+            <br>
+
+
+            <form class="form" action="#" th:action="@{/addpokemon}" th:object="${pokemon}" method="post">
+
+
+                <div class="info-block margin flex-row">
+                    <label for="nom">Nom:        </label>
+                    <input type="text" class="form-control" th:field="*{nom}" id="nom" placeholder="Nom">
+                    <span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
+                </div>
+                <br>
+
+                <div class="info-block margin flex-row">
+                    <label for="nom">Description:        </label>
+                    <input type="text" class="form-control" th:field="*{description}" id="description" placeholder="Ajouter une description du pokémon">
+                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                </div>
+
+                <br>
+                <div class="info-block margin flex-row">
+                    <label for="nom">Numéro:        </label>
+                    <input type="number" class="form-control" th:field="*{numero}" id="numero" placeholder="Numéro du pokémon">
+                    <span th:if="${#fields.hasErrors('numero')}" th:errors="*{numero}"></span>
+                </div>
+                <br>
+
+
+                <div class="info-block margin flex-row">
+                    <label for="nom">Url image:        </label>
+                    <input type="text" class="form-control" th:field="*{urlImage}" id="urlImage" placeholder="Ajouter une url vers une image du pokémon">
+                    <span th:if="${#fields.hasErrors('urlImage')}" th:errors="*{urlImage}"></span>
+                </div>
+                <br>
+
+                <div class="info-block margin flex-row">
+                    <label for="nom">Points de vie:        </label>
+                    <input type="number" class="form-control" th:field="*{pointsVie}" id="pointsVie" placeholder="Nombre de points de vie">
+                    <span th:if="${#fields.hasErrors('pointsVie')}" th:errors="*{pointsVie}"></span>
+                </div>
+                <br>
+
+
+                <div class="info-block margin flex-row">
+                    <label for="nom">Types:        </label>
+
+                    <br>
+                    <div   th:each="type : ${types}">
+                        <input type="checkbox" name="types"
+                               th:text="${type.value}"
+                               th:value="${type}"
+                               th:field="*{types}"
+                        />
+                        <br>
+                    </div>
+
+                </div>
+                <br>
+
+                <div class="info-block margin flex-row" >
+                    <label for="nom">Liste des attaques:        </label>
+                    <table border="1" class="table table-striped table-responsive-md">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nom</th>
+                            <th>Type</th>
+                            <th>Puissance</th>
+                            <th>Precision</th>
+                            <th>Cout</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="attaque : ${attaques}">
+                            <td> <input type="checkbox" name="attaques"
+                                        th:value="${attaque.id}"
+                                        th:field="*{attaques}"
+                            /></td>
+                            <td th:text="${attaque.nom}"></td>
+                            <td th:text="${attaque.type.value}"></td>
+                            <td th:text="${attaque.puissance}"></td>
+                            <td th:text="${attaque.precision}"></td>
+                            <td th:text="${attaque.cout}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+
+                <div class="info-block margin flex-row" >
+                    <label for="nom">Liste des évolutions vers d'autres pokémons:        </label>
+                    <table border="1" class="table table-striped table-responsive-md">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nom</th>
+                            <th>Numéro</th>
+                            <th>Url Image</th>
+                            <th>Points de vie</th>
+                            <th>Types</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="pok : ${pokemons}">
+                            <td> <input type="checkbox" name="attaques"
+                                        th:value="${pok.id}"
+                                        th:field="*{evolutionPokemons}"
+                            /></td>
+                            <td th:text="${pok.nom}"></td>
+                            <td th:text="${pok.numero}"></td>
+                            <td th:text="${pok.urlImage}"></td>
+                            <td th:text="${pok.pointsVie}"></td>
+                            <td >
+                                <p th:text="${type.value}" th:each="type : ${pok.getTypes()}"></p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <br>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-pencil"></span> Ajouter</button>
+                    <a th:href="@{/}" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Retour</a>
+
+                </div>
+            </form>
+
+
+        </div>
+
+    </div>
+</body>
+</html>

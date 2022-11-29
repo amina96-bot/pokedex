@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap && Jquery -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script href="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/styles.css}">
+
+    <link rel="stylesheet" th:href="@{/css/font-awesome.css}">
+    <link rel="stylesheet" th:href="@{/css/theme/white.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+
+    <title>Voir détail pokémon</title>
+</head>
+<body>
+<div class="container admin">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1><strong>Voir détail pokémon</strong></h1>
+                    <br>
+
+                    <div class="info-block margin flex-row">
+                        <h5><i class="fa fa-circle-o"></i> Nom:        </h5>
+                        <p th:text="${pokemon.nom}"></p>
+                    </div>
+                    <br>
+
+                    <div class="info-block margin flex-row">
+                        <h5><i class="fa fa-circle-o"></i> Description:        </h5>
+                        <p th:text="${pokemon.description}"></p>
+                    </div>
+                    <br>
+
+                    <div class="info-block margin flex-row">
+                        <h5><i class="fa fa-circle-o"></i> Numéro:        </h5>
+                        <p th:text="${pokemon.numero}"></p>
+                    </div>
+                    <br>
+
+                    <div class="info-block margin flex-row">
+                        <h5><i class="fa fa-circle-o"></i> Url image:        </h5>
+                        <p th:text="${pokemon.urlImage}"></p>
+                    </div>
+                    <br>
+
+                    <div class="info-block margin flex-row">
+                        <h5><i class="fa fa-circle-o"></i> Points de vie:        </h5>
+                        <p th:text="${pokemon.pointsVie}"></p>
+                    </div>
+                    <br>
+
+
+                    <div class="info-block margin flex-row">
+                        <h5><i class="fa fa-circle-o"></i> Liste des types:        </h5>
+
+                        <br>
+                        <div   th:each="type : ${pokemon.types}">
+                            <input type="checkbox" name="types"
+                                   th:text="${type.value}"
+                                   th:value="${type}"
+                            />
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="info-block margin flex-row" >
+                        <h5><i class="fa fa-circle-o"></i> Liste des attaques:        </h5>
+
+                        <table border="1" class="table table-striped table-responsive-md">
+                            <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Type</th>
+                                <th>Puissance</th>
+                                <th>Precision</th>
+                                <th>Cout</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:if="${pokemon.attaques.empty}">
+                                <td colspan="5"> Liste des attaques vide </td>
+                            </tr>
+                            <tr th:each="attaque : ${pokemon.attaques}">
+                                <td th:text="${attaque.nom}"></td>
+                                <td th:text="${attaque.type.name()}"></td>
+                                <td th:text="${attaque.puissance}"></td>
+                                <td th:text="${attaque.precision}"></td>
+                                <td th:text="${attaque.cout}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+
+                    <div class="info-block margin flex-row" >
+                        <h5><i class="fa fa-circle-o"></i> Liste des évolutions vers d'autres pokémons:        </h5>
+                        <table border="1" class="table table-striped table-responsive-md">
+                            <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Numéro</th>
+                                <th>Image</th>
+                                <th>Points de vie</th>
+                                <th>Types</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:if="${pokemon.evolutionPokemons.empty}">
+                                <td colspan="5"> Liste des évolutions vers d'autres pokémons vide </td>
+                            </tr>
+                            <tr th:each="pok : ${pokemon.evolutionPokemons}">
+                                <td th:text="${pok.nom}"></td>
+                                <td th:text="${pok.numero}"></td>
+                                <td th:text="${pok.urlImage}"></td>
+                                <td th:text="${pok.pointsVie}"></td>
+                                <td >
+                                    <p th:text="${type.value}" th:each="type : ${pok.getTypes()}"></p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <br>
+
+                    <div class="form-actions">
+                        <a th:href="@{/}" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Retour</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+
+            <img th:src="${pokemon.urlImage}">
+        </div>
+
+
+
+    </div>
+
+</div>
+</body>
+</html>
